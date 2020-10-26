@@ -20,19 +20,17 @@ In docker-compose.yaml file can be changed default settings:
   - MYSQL_ROOT_PASSWORD: define password of created mysql root user.
 
 ```yaml
-version: "3.1"
+version: "3.7"
 services:
     www:
-        build:
-          context: .
-        network_mode: "host"
-        image: ubuntu_mrbs:latest
+        image: nimmis/apache-php7
         ports: 
             - "8080:80"
         volumes:
             - ./www:/var/www/html/
         links:
             - db:docker_host
+        restart: always 
     db:
         image: mysql:8.0
         ports: 
@@ -46,9 +44,9 @@ services:
         volumes:
             - ./init_db:/docker-entrypoint-initdb.d
             - mrbs_db:/var/lib/mysql
+        restart: always 
 volumes:
     mrbs_db:
-
 ```
 
 This is minimal settings in config file, for more setting please visit [https://github.com/yorkulibraries/mrbs]
@@ -90,6 +88,7 @@ docker-compose down -v
 License
 ----
 For docker files - MIT
+
 For MRBS read LICENSE file
 
 [https://github.com/yorkulibraries/mrbs]: <https://github.com/yorkulibraries/mrbs/blob/master/web/systemdefaults.inc.php>
